@@ -62,7 +62,9 @@ void menuMissao();
 void CriarNinja();
 void CriarJutsu();
 void CriarClan();
-void CriarMissao();
+void CriarMissao(); 
+/*Funções de atualização*/
+//Vai colocando as funções aqui
 /*------------------------------*/
 
 void menuNinja()
@@ -72,6 +74,7 @@ void menuNinja()
     {
 
         printf("\n=====NINJA MENU=====\n");
+        printf("Retornar-0")
         printf("Cadastrar ninja-1");
         printf("Remover ninja-2");
         printf("Atualizar ninja-3");
@@ -81,6 +84,8 @@ void menuNinja()
 
         switch (opc2)
         {
+        case 0:
+        return;
         case 1:
             CriarNinja();
         case 2: // funxao remove
@@ -99,6 +104,7 @@ void menuJutsu()
     do
     {
         printf("\n=====JUTSUS MENU=====\n");
+        printf("Retornar-0")
         printf("Cadastrar Jutsu-1");
         printf("Remover Jutsu-2");
         printf("Atualizar Jutsu-3");
@@ -108,6 +114,8 @@ void menuJutsu()
 
         switch (opc3)
         {
+        case 0:
+        return;
         case 1: 
 
         case 2: // funxao remove
@@ -126,6 +134,7 @@ void menuClan()
     do
     {
         printf("\n=====MENU CLÃ=====\n");
+        printf("Retornar-0")
         printf("Cadastrar clã-1");
         printf("Remover clã-2");
         printf("Atualizar clã-3");
@@ -135,6 +144,8 @@ void menuClan()
 
         switch (opc4)
         {
+        case 0:
+        return;
         case 1: // funxao de criar
         case 2: // funxao remove
         case 3: // funxao att
@@ -152,6 +163,7 @@ void menuMissao()
     do
     {
         printf("\n=====MENU MISSÕES=====\n");
+        printf("Retornar-0")
         printf("Cadastrar missão-1");
         printf("Remover missão-2");
         printf("Atualizar missão-3");
@@ -161,6 +173,8 @@ void menuMissao()
 
         switch (opc5)
         {
+        case 0:
+        return;
         case 1: // funxao de criar
         case 2: // funxao remove
         case 3: // funxao att
@@ -502,6 +516,8 @@ AlterarNinja(int op, int idc)
 
     switch (op)
     {
+        case 0:
+        return;
     case 1:
         printf("Digite o novo nome do ninja: ");
        
@@ -624,6 +640,8 @@ AlterarJutsu(int op, int idc)
 
     switch (op)
     {
+        case 0:
+        return;
     case 1:
         printf("Digite o novo nome do jutsu: ");
        
@@ -736,6 +754,8 @@ AlterarClan(int op, int idc)
 
     switch (op)
     {
+        case 0:
+        return;
     case 1:
         printf("Digite o novo nome do clã: ");
        
@@ -848,6 +868,10 @@ AlterarMissoes(int op, int idc)
 
     switch (op)
     {
+
+    case 0:
+    return;
+
     case 1:
         printf("Digite o novo titulo da missão: ");
        
@@ -910,8 +934,239 @@ AlterarMissoes(int op, int idc)
     }
 }
 
+void ListarNinja(){
+
+    CLS
+        printf("-- Lista de ninjas [%d] --\n\n", num_ninjas);
+    for (int i = 0; i < num_ninjas; i++)
+    {
+        exibeNinja(_ninjas[i], i);
+    }
+}
+
+void ExibirNinja(Ninja _ninjas, int i){
+
+printf("Ninja[%d] - %s\n", i + 1, _ninjas.nome_ninja);
+printf("Rank: %s\n", _ninjas.rank_ninja);
+printf("Chakra: %s\n", _ninjas.qtd_chakra);
+printf("Clã do ninja: %s\n", _ninjas.cla.nome_clan);
+printf("Elementos com afinidade: %s", _ninjas.afn_elementos);
+printf("Jutsu: %s", _ninjas.jutsu.nome_jutsu); 
+
+//Oi miguel esse recado é do juan das 14 horas, agr tenho atendimento mas resumindo
+//preciso q vc faça as seguintes coisas replique as funções
 
 
+}
+
+void ListarClan(){
+
+    CLS
+        printf("-- Lista de clans [%d] --\n\n", num_clans);
+    for (int i = 0; i < num_clans; i++)
+    {
+        exibeClans(_clans[i], i);
+    }
+}
+void ExibirClan (Clan _clans, int i){
+
+printf("Nome[%d] - %s\n", i + 1, _clans.nome_clan);
+printf("Conjunto de habilidades: %s\n", _clans.conjunto_skill);
+printf("Skill hered: %s\n", _ninjas.qtd_chakra);
+
+}
+
+void ListarMissao(){
+
+    CLS
+        printf("-- Lista de missoes [%d] --\n\n", num_missoes);
+    for (int i = 0; i < num_missoes; i++)
+    {
+        exibeMissoes(_missoes[i], i);
+    }
+}
+
+
+
+
+void OpJustsu(){
+
+    int indice;
+    char op, straux[MAX];
+
+    if(num_jutsus == 0){
+
+        printf("ERRO:Sem jutsus para excluir");
+        return;
+    }
+    if (num_jutsus > 1){
+
+        do{
+            printf("Qual jutsu você deseja excluir? [%d-%d]?\n", 1 num_jutsus);
+            printf("Digite o indice do jutsu desejado:");
+            gets(straux);
+
+            if(indice < 0 || indice>= num_jutsus){
+                printf("ERRO:Numero invalido!!");
+                
+                return;
+            }
+            CLS
+        }
+
+
+        }
+    
+    else{
+        indice = 0;
+    }
+
+    do{
+    
+
+
+
+    }
+
+}
+void ListarJutsu(){
+
+    CLS
+        printf("-- Lista de jutsus [%d] --\n\n", num_jutsus);
+    for (int i = 0; i < num_jutsus; i++)
+    {
+        exibeJutsus(_jutsus[i], i);
+    }
+}
+
+void OpNinjas(){
+
+    int indice;
+    char op, straux[MAX];
+
+    if(num_ninjas == 0){
+
+        printf("ERRO:Sem jutsus para excluir");
+        return;
+    }
+    if (num_ninjas > 1){
+
+        do{
+            printf("Qual ninja você deseja excluir? [%d-%d]?\n", 1 num_ninjas);
+            printf("Digite o indice do ninja desejado:");
+            gets(straux);
+
+            if(indice < 0 || indice>= num_ninjas){
+                printf("ERRO:Numero invalido!!");
+                
+                return;
+            }
+            CLS
+
+
+
+        }
+    }
+    else{
+        indice = 0;
+    }
+
+    do{
+
+
+
+
+    }
+
+
+
+}
+
+void OpClan(){
+
+    int indice;
+    char op, straux[MAX];
+
+    if(num_clans == 0){
+
+        printf("ERRO:Sem clan para excluir");
+        return;
+    }
+    if (num_clans > 1){
+
+        do{
+            printf("Qual clan você deseja excluir? [%d-%d]?\n", 1 num_clans);
+            printf("Digite o indice do clan desejado:");
+            gets(straux);
+
+            if(indice < 0 || indice>= num_clans){
+                printf("ERRO:Numero invalido!!");
+                
+                return;
+            }
+            CLS
+
+
+
+        }
+    }
+    else{
+        indice = 0;
+    }
+
+    do{
+
+
+
+
+    }
+
+
+
+}
+
+void OpMissao(){
+
+    int indice;
+    char op, straux[MAX];
+
+    if(num_Missoes == 0){
+
+        printf("ERRO:Sem missoes para excluir");
+        return;
+    }
+    if (num_missoes > 1){
+
+        do{
+            printf("Qual missao você deseja excluir? [%d-%d]?\n", 1 num_missoes);
+            printf("Digite o indice da missao desejada:");
+            gets(straux);
+
+            if(indice < 0 || indice>= num_missoes){
+                printf("ERRO:Numero invalido!!");
+                
+                return;
+            }
+            CLS
+
+
+
+        }
+    }
+    else{
+        indice = 0;
+    }
+
+    do{
+
+
+
+
+    }
+
+
+
+}
 //--------------Função Main--------------
 int main()
 {
