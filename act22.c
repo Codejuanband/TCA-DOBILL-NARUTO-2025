@@ -108,7 +108,8 @@ void menuJutsu()
 
         switch (opc3)
         {
-        case 1: // funxao de criar
+        case 1: 
+
         case 2: // funxao remove
         case 3: // funxao att
         case 4: // funxao lista
@@ -175,7 +176,7 @@ void CriarNinja()
 {
     char straux[MAX];
     int r1, r2;
-    Ninja *ninjas;
+    Ninja ninjas;
 
     printf("Digite o nome do ninja: ");
     gets(straux);
@@ -197,7 +198,10 @@ void CriarNinja()
     scanf("%d", &r1);
     if (r1 == 1)
     {
-        // trigga funxao criar clã
+         Clan cla = CriarClan();
+        *_clans = realloc(_clans, num_clans * sizeof(Clan));
+        _clans[num_clans-1] = cla;
+        ninja.clan = cla;
     }
     else
     {
@@ -215,7 +219,10 @@ void CriarNinja()
     scanf("%d", &r2);
     if (r2 == 1)
     {
-        CriarJutsu();
+        Jutsu jutsu = CriarJutsu();
+        *jutsus = realloc(jutsus, num_jutsus * sizeof(Jutsu));
+        jutsus[num_jutsus-1] = jutsu;
+        ninja.jutsu = jutsu;
     }
     else
     {
@@ -223,13 +230,15 @@ void CriarNinja()
     }
 
     num_ninjas++;
+    *_ninjas = realloc(_ninjas, num_ninjas * sizeof(Ninja));
+    _ninjas[num_ninjas - 1] = ninja;
 }
 
 void CriarJutsu()
 {
     char straux[MAX];
 
-    Jutsus *jutsu;
+    Jutsus jutsu;
 
     printf("Digite seu jutsu:");
     gets(straux);
@@ -253,6 +262,8 @@ void CriarJutsu()
     scanf("%d", jutsu->custo_chakra);
 
     num_jutsus++;
+    *_jutsus = realloc(_jutsus, num_jutsus * sizeof(Jutsu));
+    _jutsus[num_jutsus - 1] = jutsus;
 }
 
 void CriarClan()
@@ -279,6 +290,8 @@ void CriarClan()
     strcpy(cla->tecnica_trad, straux);
 
     num_clans++;
+    *_clans = realloc(_clans, num_clans * sizeof(Clan));
+    _clans[num_clans - 1] = cla;
 }
 
 void CriarMissao()
@@ -293,11 +306,20 @@ void CriarMissao()
     strcpy(missao->titulo_missao, straux);
 
     fflush(stdin);
-    printf("Digite o líder da missão:");
-    gets(straux);
-    missao->lider = (char *)malloc(strlen(straux) + 1);
-    strcpy(missao->lider->nome_ninja, straux);
-
+    printf("Deseja criar um ninja para ser lider?\n(1-Sim,2-Não>)");
+    scanf("%d", &r2);
+    if (r2 == 1)
+    {
+        Ninja ninjas = CriarNinja();
+        *_ninjas = realloc(_ninjas, num_ninjas * sizeof(Ninja));
+        _ninjas[num_ninjas-1] = ninjas;
+        missao.lider
+    }
+    else
+    {
+        // verifica se tem jutsu se n tiver da 
+    }
+    
     fflush(stdin);
     printf("Digite a dificuldade da missão\n(D, C, B, A ou S)\n:");
     gets(straux);
@@ -310,13 +332,25 @@ void CriarMissao()
     missao->status_missao = (char *)malloc(strlen(straux) + 1);
     strcpy(missao->status_missao, straux);
 
-    fflush(stdin); // Alterar isso mais tarde, não esta certo
-    printf("Digite os ninjas participantes da missão:");
-    gets(straux);
-    missao->ninjas_participantes = (char *)malloc(strlen(straux) + 1);
-    strcpy(missao->ninjas_participantes->nome_ninja, straux);
+    fflush(stdin);
+    printf("Deseja criar um ninja\n(1-Sim,2-Não>)");
+    scanf("%d", &r2);
+    if (r2 == 1)
+    {
+        Ninja ninjas = CriarNinja();
+        *_ninjas = realloc(_ninjas, num_ninjas * sizeof(Ninja));
+        _ninjas[num_ninjas-1] = ninjas;
+        missao.ninjas_participantes
+    }
+    else
+    {
+        // verifica se tem jutsu se n tiver da erro e volta
+    }
+
 
     num_missoes++;
+    *_missoes = realloc(_missoes, num_missoes * sizeof(Missao));
+    _missoes[num_missoes - 1] = missao;
 }
 
 void SalvarNinjas()
@@ -358,6 +392,14 @@ void SalvarJutsus()
                 _jutsus[i].poder_atk);
     }
     fclose(fp);
+}
+
+Clan ProcurarClan(char *cla) {
+    for (int i; i < num_clans; i++) {
+        if(strcmp(*cla, _clans[i].nome_clan) == 0) {
+            return _clans[i];
+        }
+    }
 }
 
 void SalvarClans()
