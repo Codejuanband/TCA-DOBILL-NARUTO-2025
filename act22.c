@@ -251,6 +251,8 @@ void CriarJutsu()
     fflush(stdin);
     printf("Digite quanto de chakra seu jutsu consome:");
     scanf("%d", jutsu->custo_chakra);
+
+    num_jutsus++;
 }
 
 void CriarClan()
@@ -275,6 +277,8 @@ void CriarClan()
     gets(straux);
     cla->tecnica_trad = (char *)malloc(strlen(straux) + 1);
     strcpy(cla->tecnica_trad, straux);
+
+    num_clans++;
 }
 
 void CriarMissao()
@@ -292,7 +296,7 @@ void CriarMissao()
     printf("Digite o líder da missão:");
     gets(straux);
     missao->lider = (char *)malloc(strlen(straux) + 1);
-    strcpy(missao->lider, straux);
+    strcpy(missao->lider->nome_ninja, straux);
 
     fflush(stdin);
     printf("Digite a dificuldade da missão\n(D, C, B, A ou S)\n:");
@@ -310,7 +314,9 @@ void CriarMissao()
     printf("Digite os ninjas participantes da missão:");
     gets(straux);
     missao->ninjas_participantes = (char *)malloc(strlen(straux) + 1);
-    strcpy(missao->ninjas_participantes, straux);
+    strcpy(missao->ninjas_participantes->nome_ninja, straux);
+
+    num_missoes++;
 }
 
 void SalvarNinjas()
@@ -323,15 +329,13 @@ void SalvarNinjas()
     }
     for (int i = 0; i < num_ninjas; i++)
     {
-        fprintf(fp, "%s,%s,%d,%s,%s,%s,%s,%d\n",
+        fprintf(fp, "%s,%s,%d,%s,%s,%s\n",
                 _ninjas[i].nome_ninja,
                 _ninjas[i].rank_ninja,
                 _ninjas[i].qtd_chakra,
                 _ninjas[i].cla.nome_clan,
                 _ninjas[i].afn_elementos,
-                _ninjas[i].jutsu.nome_jutsu,
-                _ninjas[i].jutsu.tipo_jutsu,
-                _ninjas[i].jutsu.custo_chakra);
+                _ninjas[i].jutsu.nome_jutsu);
     }
     fclose(fp);
 }
@@ -386,10 +390,10 @@ void SalvarMissoes()
     {
         fprintf(fp, "%s,%s,%s,%s,%s\n",
                 _missoes[i].titulo_missao,
-                _missoes[i].lider,
+                _missoes[i].lider->nome_ninja,
                 _missoes[i].dificuldade,
                 _missoes[i].status_missao,
-                _missoes[i].ninjas_participantes);
+                _missoes[i].ninjas_participantes->nome_ninja);
     }
     fclose(fp);
 }
@@ -489,7 +493,11 @@ AlterarNinja(int op, int idc)
         scanf("%d", &_ninjas[idc].qtd_chakra);
         break;
     case 4:
-        // Alterar clã
+        fflush(stdin);
+        printf("Digite o novo clã do seu ninja:");
+        gets(straux);
+        _ninjas[idc].cla.nome_clan = (char *)malloc(strlen(straux) + 1);
+        strcpy(_ninjas[idc].cla.nome_clan, straux);
         break;
     case 5:
         fflush(stdin);
@@ -499,7 +507,11 @@ AlterarNinja(int op, int idc)
         strcpy(_ninjas[idc].afn_elementos, straux);
         break;
     case 6:
-        // Alterar jutsu
+        fflush(stdin);
+        printf("Digite o novo jutsu do seu ninja:");
+        gets(straux);
+        _ninjas[idc].jutsu.nome_jutsu = (char *)malloc(strlen(straux) + 1);
+        strcpy(_ninjas[idc].jutsu.nome_jutsu, straux);
         break;
     default:
         printf("Opção inválida.\n");
@@ -799,7 +811,7 @@ AlterarMissoes(int op, int idc)
        
         for (int i = 0; i < num_missoes; i++)
         {
-            if(strcmp(_clans[i].titulo_missao, straux) == 0)
+            if(strcmp(_missoes[i].titulo_missao, straux) == 0)
             {
                 printf("ERRO: Já tem uma missão com esse titulo.\n");
                 flag = 0;
@@ -818,8 +830,8 @@ AlterarMissoes(int op, int idc)
         fflush(stdin);
         printf("Digite o novo lider da missão:");
         gets(straux);
-        _missoes[idc].lider = (char *)malloc(strlen(straux) + 1);
-        strcpy(_missoes[idc].lider, straux);
+        _missoes[idc].lider->nome_ninja = (char *)malloc(strlen(straux) + 1);
+        strcpy(_missoes[idc].lider->nome_ninja, straux);
         break;
     case 3:
         fflush(stdin);
@@ -839,13 +851,16 @@ AlterarMissoes(int op, int idc)
         fflush(stdin);
         printf("Digite os novos ninjas participantes da missão:");
         gets(straux);
-        _missoes[idc].ninjas_participantes. = (char *)malloc(strlen
+        _missoes[idc].ninjas_participantes->nome_ninja = (char *)malloc(strlen(straux) + 1);
+        strcpy(_missoes[idc].ninjas_participantes->nome_ninja, straux);
+        break;
     default:
         printf("Opção inválida.\n");
         flag = 0;
         break;
     }
     // Favor adicionar isso em todas as funções de alterar
+    // e se possivel valida cada case desse igual tá no case 1 so abrir um if e comparar se os dois é igual a 0
     int c;
      printf("Aperte qualquer tecla para continuar...");
     while ((c = getchar()) != '\n' && c != EOF)
